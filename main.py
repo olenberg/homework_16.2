@@ -1,7 +1,7 @@
 import os
 import json
 from datetime import datetime
-from flask import Flask, redirect, request, render_template
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from utils import load_users, load_orders, load_offers
