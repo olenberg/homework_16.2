@@ -1,7 +1,7 @@
 import os
 import json
 from datetime import datetime
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from utils import load_users, load_orders, load_offers
@@ -135,16 +135,16 @@ def get_user(id):
 def create_user():
     content_type = request.headers.get('Content-Type')
 
-    if (content_type == 'application/json'):
+    if content_type == 'application/json':
         json_request = request.json
 
     user = User(
-        first_name=json_request.get('first_name'),
-        last_name=json_request.get('last_name'),
-        age=json_request.get('age'),
-        email=json_request.get('email'),
-        role=json_request.get('role'),
-        phone=json_request.get('phone')
+        first_name=json_request[0].get('first_name'),
+        last_name=json_request[0].get('last_name'),
+        age=json_request[0].get('age'),
+        email=json_request[0].get('email'),
+        role=json_request[0].get('role'),
+        phone=json_request[0].get('phone')
     )
 
     db.session.add(user)
@@ -157,16 +157,16 @@ def create_user():
 def update_user(id):
     content_type = request.headers.get('Content-Type')
 
-    if (content_type == 'application/json'):
+    if content_type == 'application/json':
         json_request = request.json
 
     user = User.query.get(id)
-    user.first_name = json_request.get('first_name')
-    user.last_name = json_request.get('last_name')
-    user.age = json_request.get('age')
-    user.email = json_request.get('email')
-    user.role = json_request.get('role')
-    user.phone = json_request.get('phone')
+    user.first_name = json_request[0].get('first_name')
+    user.last_name = json_request[0].get('last_name')
+    user.age = json_request[0].get('age')
+    user.email = json_request[0].get('email')
+    user.role = json_request[0].get('role')
+    user.phone = json_request[0].get('phone')
 
     db.session.add(user)
     db.session.commit()
@@ -228,19 +228,19 @@ def get_order(id):
 def create_order():
     content_type = request.headers.get('Content-Type')
 
-    if (content_type == 'application/json'):
+    if content_type == 'application/json':
         json_request = request.json
 
     order = Order(
-        name=json_request.get('name'),
-        description=json_request.get('description'),
-        age=json_request.get('age'),
-        start_date=json_request.get('start_date'),
-        end_date=json_request.get('end_date'),
-        address=json_request.get('address'),
-        price=json_request.get('price'),
-        customer_id=json_request.get('customer_id'),
-        executor_id=json_request.get('executor_id'),
+        name=json_request[0].get('name'),
+        description=json_request[0].get('description'),
+        age=json_request[0].get('age'),
+        start_date=json_request[0].get('start_date'),
+        end_date=json_request[0].get('end_date'),
+        address=json_request[0].get('address'),
+        price=json_request[0].get('price'),
+        customer_id=json_request[0].get('customer_id'),
+        executor_id=json_request[0].get('executor_id'),
     )
 
     db.session.add(order)
@@ -253,19 +253,19 @@ def create_order():
 def update_order(id):
     content_type = request.headers.get('Content-Type')
 
-    if (content_type == 'application/json'):
+    if content_type == 'application/json':
         json_request = request.json
 
     order = Order.query.get(id)
-    order.name = json_request.get('name'),
-    order.description = json_request.get('description'),
-    order.age = json_request.get('age'),
-    order.start_date = json_request.get('start_date'),
-    order.end_date = json_request.get('end_date'),
-    order.address = json_request.get('address'),
-    order.price = json_request.get('price'),
-    order.customer_id = json_request.get('customer_id'),
-    order.executor_id = json_request.get('executor_id'),
+    order.name = json_request[0].get('name'),
+    order.description = json_request[0].get('description'),
+    order.age = json_request[0].get('age'),
+    order.start_date = json_request[0].get('start_date'),
+    order.end_date = json_request[0].get('end_date'),
+    order.address = json_request[0].get('address'),
+    order.price = json_request[0].get('price'),
+    order.customer_id = json_request[0].get('customer_id'),
+    order.executor_id = json_request[0].get('executor_id'),
 
     db.session.add(order)
     db.session.commit()
@@ -315,12 +315,12 @@ def get_offer(id):
 def create_offer():
     content_type = request.headers.get('Content-Type')
 
-    if (content_type == 'application/json'):
+    if content_type == 'application/json':
         json_request = request.json
 
     offer = Offer(
-        order_id=json_request.get('order_id'),
-        executor_id=json_request.get('executor_id')
+        order_id=json_request[0].get('order_id'),
+        executor_id=json_request[0].get('executor_id')
     )
 
     db.session.add(offer)
@@ -333,12 +333,12 @@ def create_offer():
 def update_offer(id):
     content_type = request.headers.get('Content-Type')
 
-    if (content_type == 'application/json'):
+    if content_type == 'application/json':
         json_request = request.json
 
     offer = Offer.query.get(id)
-    offer.order_id = json_request.get('order_id')
-    offer.executor_id = json_request.get('executor_id')
+    offer.order_id = json_request[0].get('order_id')
+    offer.executor_id = json_request[0].get('executor_id')
 
     db.session.add(offer)
     db.session.commit()
